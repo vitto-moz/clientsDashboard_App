@@ -1,0 +1,68 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Clients_dashboard</title>	
+    <meta content-type="text/html" charset="utf-8"> 
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="styles/styles.css">
+    <script src="https://opensource.keycdn.com/angularjs/1.5.8/angular.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.3.2/angular-ui-router.js"></script>
+    <script src="js/app.js"></script>
+</head>
+<body ng-app="app" ng-controller="InstantSearchController">   
+    <div class="container">
+        <form class="form-group">
+            <div class="col-sm-5">
+                <h3>Clients:</h3>
+                <div class="row margin-bottom">
+                    <input
+                     class="form-control custom-width col-xs-8" 
+                     type="text" 
+                     ng-model="searchString" 
+                     placeholder="Type client info here" 
+                    />
+                </div>
+                <ul class="clients-list">
+                   <li 
+                    ng-repeat="i in items | searchFor:searchString" 
+                    ng-click = showFullInfo(i.contact['phone'])
+                    class="clients-list-item" 
+                    >
+                        <div>
+                            <img ng-src="{{i.general['avatar']}}" class="small-avatar" />
+                            <p class="client-list-name">
+                                {{i.general['firstName']}}
+                                {{i.general['lastName']}} </br>
+                                {{i.job['title']}}
+                            </p>
+                        </div>
+                    </li>
+                </ul>
+             </div>
+             <div class="col-xs-1"></div>
+             <div class="col-lg-5 col-sm-6">
+                <h3>Details:</h3>
+                    <div id="details" class="hidden">
+                        <img 
+                            ng-src="{{fullClientInfo.general['avatar']}}"
+                            class="avatar" 
+                        />
+                        <h4>{{fullClientInfo.general["firstName"] + " " + fullClientInfo.general["lastName"]}}
+                        </h4>
+                        <h5>
+                            {{fullClientInfo.job["title"] + " - " + fullClientInfo.job["company"]}}
+                        </h5>
+                        <div class="contact-info">email:</div>{{fullClientInfo.contact["email"]}}</br>
+                        <div class="contact-info">phone: </div>{{fullClientInfo.contact["phone"]}}</br>
+                        <div class="contact-info">street: </div>{{fullClientInfo.address["street"]}}</br>
+                        <div class="contact-info">city: </div>{{fullClientInfo.address["city"]}}</br>
+                        <div class="contact-info">zipCode: </div>{{fullClientInfo.address["zipCode"]}}</br>
+                        <div class="contact-info">country: </div>{{fullClientInfo.address["country"]}}</br>
+                    </div>
+             </div> 
+        </form>
+    </div>
+</body>
+</html>
